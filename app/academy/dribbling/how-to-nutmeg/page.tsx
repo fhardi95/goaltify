@@ -7,12 +7,12 @@ const CANONICAL = 'https://goaltify.com/academy/dribbling/how-to-nutmeg'
 
 export const metadata: Metadata = buildMetadata({
   title: 'How to Nutmeg: The Art of the Panna',
-  description: 'When to nutmeg, how to set it up, and the exact technique to thread the ball between a defender's legs reliably.',
+  description: "When to nutmeg, how to set it up, and the exact technique to thread the ball between a defender's legs reliably.",
   canonical: CANONICAL,
 })
 
 export default function Page() {
-  const schema = buildArticleSchema({ title: 'How to Nutmeg: The Art of the Panna', description: 'When to nutmeg, how to set it up, and the exact technique to thread the ball between a defender's legs reliably.', canonical: CANONICAL, publishedAt: '2026-05-10' })
+  const schema = buildArticleSchema({ title: 'How to Nutmeg: The Art of the Panna', description: "When to nutmeg, how to set it up, and the exact technique to thread the ball between a defender's legs reliably.", canonical: CANONICAL, publishedAt: '2026-05-10' })
   return (
     <div className="container-site py-8 max-w-4xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

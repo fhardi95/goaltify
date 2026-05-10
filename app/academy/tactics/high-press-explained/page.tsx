@@ -7,12 +7,12 @@ const CANONICAL = 'https://goaltify.com/academy/tactics/high-press-explained'
 
 export const metadata: Metadata = buildMetadata({
   title: 'High Press in Football: How It Works',
-  description: 'The triggers, player roles and risk-reward of the high press — from Klopp's Liverpool to Guardiola's City explained simply.',
+  description: "The triggers, player roles and risk-reward of the high press — from Klopp's Liverpool to Guardiola's City explained simply.",
   canonical: CANONICAL,
 })
 
 export default function Page() {
-  const schema = buildArticleSchema({ title: 'High Press in Football: How It Works', description: 'The triggers, player roles and risk-reward of the high press — from Klopp's Liverpool to Guardiola's City explained simply.', canonical: CANONICAL, publishedAt: '2026-05-10' })
+  const schema = buildArticleSchema({ title: 'High Press in Football: How It Works', description: "The triggers, player roles and risk-reward of the high press — from Klopp's Liverpool to Guardiola's City explained simply.", canonical: CANONICAL, publishedAt: '2026-05-10' })
   return (
     <div className="container-site py-8 max-w-4xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

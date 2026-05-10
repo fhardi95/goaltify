@@ -7,12 +7,12 @@ const CANONICAL = 'https://goaltify.com/academy/dribbling/how-to-take-a-free-kic
 
 export const metadata: Metadata = buildMetadata({
   title: 'How to Take a Free Kick Like a Pro',
-  description: 'Placement, dipping technique, power and set-piece strategy. Everything you need to become your team's free-kick specialist.',
+  description: "Placement, dipping technique, power and set-piece strategy. Everything you need to become your team's free-kick specialist.",
   canonical: CANONICAL,
 })
 
 export default function Page() {
-  const schema = buildArticleSchema({ title: 'How to Take a Free Kick Like a Pro', description: 'Placement, dipping technique, power and set-piece strategy. Everything you need to become your team's free-kick specialist.', canonical: CANONICAL, publishedAt: '2026-05-10' })
+  const schema = buildArticleSchema({ title: 'How to Take a Free Kick Like a Pro', description: "Placement, dipping technique, power and set-piece strategy. Everything you need to become your team's free-kick specialist.", canonical: CANONICAL, publishedAt: '2026-05-10' })
   return (
     <div className="container-site py-8 max-w-4xl">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
