@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { LiveScoresFeed } from '@/components/scores/LiveScoresFeed'
 
 export const metadata: Metadata = {
-  title: 'Live Football Scores Today — World Cup, Premier League, Euros',
+  title: 'Live Football Scores Today — World Cup, Premier League',
   description:
     'Live football scores updated every 60 seconds. Follow the World Cup, Euro Championship, Premier League, Champions League and more on Goaltify.',
   keywords: ['live football scores', 'live scores today', 'World Cup live', 'Premier League scores'],
