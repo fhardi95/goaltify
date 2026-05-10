@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "node scripts/generate-articles.mjs",
+    "generate:all": "node scripts/generate-articles.mjs --all"
   },
   "dependencies": {
     "next": "15.1.0",
