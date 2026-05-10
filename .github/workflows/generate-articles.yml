@@ -1,0 +1,62 @@
+name: Generate Goaltify Articles
+
+on:
+  # Run every Sunday at 06:00 UTC (same pattern as BloxFruitsAI)
+  schedule:
+    - cron: '0 6 * * 0'
+
+  # Also allow manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      generate_all:
+        description: 'Generate all topics (not just 2)?'
+        type: boolean
+        default: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to commit new article files
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate articles
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ "${{ github.event.inputs.generate_all }}" = "true" ]; then
+            node scripts/generate-articles.mjs --all
+          else
+            node scripts/generate-articles.mjs
+          fi
+
+      - name: Check for new articles
+        id: check_changes
+        run: |
+          git diff --quiet content/articles/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push new articles
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "Goaltify Bot"
+          git config user.email "bot@goaltify.com"
+          git add content/articles/
+          ARTICLE_COUNT=$(git diff --cached --name-only | wc -l)
+          git commit -m "✨ Auto-generate ${ARTICLE_COUNT} new article(s) [$(date +'%Y-%m-%d')]"
+          git push
+
+      - name: Trigger Vercel deployment
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          echo "✅ New articles pushed — Vercel will auto-deploy from main branch"
+          echo "Visit: https://goaltify.com/news to see them live"

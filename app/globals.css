@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #1a7a3f;
+  --brand-light: #4db882;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-gray-950 text-gray-100;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-xl;
+  }
+  .badge-live {
+    @apply inline-flex items-center gap-1 text-xs font-medium bg-red-900/40 text-red-400 border border-red-800/50 px-2 py-0.5 rounded-full;
+  }
+  .badge-ft {
+    @apply inline-flex text-xs font-medium bg-gray-800 text-gray-400 px-2 py-0.5 rounded-full;
+  }
+  .badge-upcoming {
+    @apply inline-flex text-xs font-medium bg-blue-900/40 text-blue-400 px-2 py-0.5 rounded-full;
+  }
+}
