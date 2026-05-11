@@ -4,7 +4,7 @@ import { buildMetadata } from '@/lib/seo'
 
 // ─── SEO Metadata ────────────────────────────────────────────────────────────
 export const metadata: Metadata = buildMetadata({
-  title: 'FIFA World Cup 2026 — Live Scores, Groups, Fixtures & Team Guide',
+  title: 'FIFA World Cup 2026 — Live Scores, Groups',
   description:
     'Complete FIFA World Cup 2026 guide. Live scores, all 12 group tables, full fixture list, team guides and expert analysis. 48 teams, 3 hosts, 104 matches — June 11 to July 19.',
   canonical: 'https://www.goaltify.com/world-cup',

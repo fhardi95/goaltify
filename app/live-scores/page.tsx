@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 // ─── SEO Metadata ─────────────────────────────────────────────────────────────
 export const metadata: Metadata = buildMetadata({
-  title: 'Live Football Scores Today — World Cup 2026, Premier League & More',
+  title: 'Live Football Scores Today — World Cup 2026, Premier League',
   description:
     'Live football scores updated every 60 seconds. Follow the FIFA World Cup 2026, Premier League, Champions League, La Liga, Bundesliga, Serie A and more on Goaltify. Real-time results, goal scorers and match stats.',
   canonical: 'https://www.goaltify.com/live-scores',
