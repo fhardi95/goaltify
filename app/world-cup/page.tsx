@@ -5,7 +5,7 @@ import { buildMetadata } from '@/lib/seo'
 export const metadata: Metadata = buildMetadata({
   title: 'FIFA World Cup 2026 — Scores, News & Guide',
   description: 'Everything you need for the FIFA World Cup 2026. Live scores, group tables, fixtures, team guides and analysis on Goaltify.',
-  canonical: 'https://www.goaltify.com/world-cup',
+  canonical: 'https://goaltify.com/world-cup',
   keywords: ['World Cup 2026', 'FIFA World Cup', 'World Cup scores', 'World Cup fixtures', 'World Cup groups'],
 })
 
