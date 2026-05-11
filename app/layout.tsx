@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s',
   },
   description:
-    'Goaltify covers live football scores, World Cup news, Euro Championship results, training guides, and tactical analysis. Your ultimate football companion.',
+    'Goaltify covers live football scores, World Cup news, Euro Championship results, training guides, & tactical analysis. Your ultimate football companion.',
   keywords: ['football', 'live scores', 'World Cup', 'Premier League', 'football news', 'training guides'],
   authors: [{ name: 'Goaltify' }],
   creator: 'Goaltify',
