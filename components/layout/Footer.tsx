@@ -4,7 +4,7 @@ const LINKS = {
   Content: [
     { label: 'Live scores', href: '/live-scores' },
     { label: 'News', href: '/news' },
-    { label: 'World Cup', href: '/world-cup' },
+    { label: 'World Cup 2026', href: '/world-cup' },
     { label: 'Euro Championship', href: '/euros' },
   ],
   Academy: [
