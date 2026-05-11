@@ -1,35 +1,31 @@
-import type { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        allow: '/',
+        userAgent: "*",
+        allow: "/",
         disallow: [
-          '/api/',        // Never expose API routes to crawlers
-          '/admin/',      // Future admin panel
-          '/_next/',      // Next.js internals
-          '/private/',    // Any private pages
+          "/api/",
+          "/_next/",
         ],
+      },
+      // Block AI scrapers that don't respect content
+      {
+        userAgent: "GPTBot",
+        disallow: "/",
       },
       {
-        // Block AI training bots — protects your original content
-        userAgent: [
-          'GPTBot',
-          'ChatGPT-User',
-          'Google-Extended',
-          'CCBot',
-          'anthropic-ai',
-          'Claude-Web',
-          'Omgilibot',
-          'FacebookBot',
-          'Bytespider',
-        ],
-        disallow: '/',
+        userAgent: "CCBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "anthropic-ai",
+        disallow: "/",
       },
     ],
-    sitemap: 'https://goaltify.com/sitemap.xml',
-    host: 'https://goaltify.com',
-  }
+    sitemap: "https://www.bloxfruitsai.com/sitemap.xml",
+    host: "https://www.bloxfruitsai.com",
+  };
 }
