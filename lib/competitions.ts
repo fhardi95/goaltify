@@ -1,3 +1,90 @@
+// ─── Team config ─────────────────────────────────────────────────────────────
+
+export interface Team {
+  id: number
+  slug: string
+  name: string
+  shortName: string
+  logo: string
+  competitionSlug: string
+}
+
+export const TEAMS: Team[] = [
+  // Premier League
+  { id: 33, slug: 'manchester-united', name: 'Manchester United', shortName: 'MUN', logo: 'https://media.api-sports.io/football/teams/33.png', competitionSlug: 'premier-league' },
+  { id: 40, slug: 'liverpool', name: 'Liverpool', shortName: 'LIV', logo: 'https://media.api-sports.io/football/teams/40.png', competitionSlug: 'premier-league' },
+  { id: 49, slug: 'chelsea', name: 'Chelsea', shortName: 'CHE', logo: 'https://media.api-sports.io/football/teams/49.png', competitionSlug: 'premier-league' },
+  { id: 42, slug: 'arsenal', name: 'Arsenal', shortName: 'ARS', logo: 'https://media.api-sports.io/football/teams/42.png', competitionSlug: 'premier-league' },
+  { id: 50, slug: 'manchester-city', name: 'Manchester City', shortName: 'MCI', logo: 'https://media.api-sports.io/football/teams/50.png', competitionSlug: 'premier-league' },
+  { id: 47, slug: 'tottenham', name: 'Tottenham', shortName: 'TOT', logo: 'https://media.api-sports.io/football/teams/47.png', competitionSlug: 'premier-league' },
+  { id: 66, slug: 'aston-villa', name: 'Aston Villa', shortName: 'AVL', logo: 'https://media.api-sports.io/football/teams/66.png', competitionSlug: 'premier-league' },
+  { id: 34, slug: 'newcastle', name: 'Newcastle', shortName: 'NEW', logo: 'https://media.api-sports.io/football/teams/34.png', competitionSlug: 'premier-league' },
+  { id: 48, slug: 'west-ham', name: 'West Ham', shortName: 'WHU', logo: 'https://media.api-sports.io/football/teams/48.png', competitionSlug: 'premier-league' },
+  { id: 45, slug: 'everton', name: 'Everton', shortName: 'EVE', logo: 'https://media.api-sports.io/football/teams/45.png', competitionSlug: 'premier-league' },
+  { id: 35, slug: 'brentford', name: 'Brentford', shortName: 'BRE', logo: 'https://media.api-sports.io/football/teams/55.png', competitionSlug: 'premier-league' },
+  { id: 39, slug: 'wolves', name: 'Wolves', shortName: 'WOL', logo: 'https://media.api-sports.io/football/teams/39.png', competitionSlug: 'premier-league' },
+  { id: 36, slug: 'fulham', name: 'Fulham', shortName: 'FUL', logo: 'https://media.api-sports.io/football/teams/36.png', competitionSlug: 'premier-league' },
+  { id: 62, slug: 'brighton', name: 'Brighton', shortName: 'BHA', logo: 'https://media.api-sports.io/football/teams/51.png', competitionSlug: 'premier-league' },
+  { id: 52, slug: 'crystal-palace', name: 'Crystal Palace', shortName: 'CRY', logo: 'https://media.api-sports.io/football/teams/52.png', competitionSlug: 'premier-league' },
+  { id: 41, slug: 'southampton', name: 'Southampton', shortName: 'SOU', logo: 'https://media.api-sports.io/football/teams/41.png', competitionSlug: 'premier-league' },
+  { id: 44, slug: 'nottingham-forest', name: "Nott'm Forest", shortName: 'NFO', logo: 'https://media.api-sports.io/football/teams/65.png', competitionSlug: 'premier-league' },
+  { id: 46, slug: 'leicester', name: 'Leicester City', shortName: 'LEI', logo: 'https://media.api-sports.io/football/teams/46.png', competitionSlug: 'premier-league' },
+  { id: 37, slug: 'ipswich', name: 'Ipswich Town', shortName: 'IPS', logo: 'https://media.api-sports.io/football/teams/57.png', competitionSlug: 'premier-league' },
+  { id: 38, slug: 'bournemouth', name: 'Bournemouth', shortName: 'BOU', logo: 'https://media.api-sports.io/football/teams/35.png', competitionSlug: 'premier-league' },
+  // La Liga
+  { id: 529, slug: 'barcelona', name: 'Barcelona', shortName: 'BAR', logo: 'https://media.api-sports.io/football/teams/529.png', competitionSlug: 'la-liga' },
+  { id: 541, slug: 'real-madrid', name: 'Real Madrid', shortName: 'RMA', logo: 'https://media.api-sports.io/football/teams/541.png', competitionSlug: 'la-liga' },
+  { id: 530, slug: 'atletico-madrid', name: 'Atlético Madrid', shortName: 'ATM', logo: 'https://media.api-sports.io/football/teams/530.png', competitionSlug: 'la-liga' },
+  { id: 532, slug: 'valencia', name: 'Valencia', shortName: 'VAL', logo: 'https://media.api-sports.io/football/teams/532.png', competitionSlug: 'la-liga' },
+  { id: 543, slug: 'real-betis', name: 'Real Betis', shortName: 'BET', logo: 'https://media.api-sports.io/football/teams/543.png', competitionSlug: 'la-liga' },
+  { id: 538, slug: 'sevilla', name: 'Sevilla', shortName: 'SEV', logo: 'https://media.api-sports.io/football/teams/536.png', competitionSlug: 'la-liga' },
+  { id: 536, slug: 'villarreal', name: 'Villarreal', shortName: 'VIL', logo: 'https://media.api-sports.io/football/teams/533.png', competitionSlug: 'la-liga' },
+  { id: 548, slug: 'athletic-bilbao', name: 'Athletic Club', shortName: 'ATH', logo: 'https://media.api-sports.io/football/teams/531.png', competitionSlug: 'la-liga' },
+  { id: 546, slug: 'real-sociedad', name: 'Real Sociedad', shortName: 'RSO', logo: 'https://media.api-sports.io/football/teams/548.png', competitionSlug: 'la-liga' },
+  { id: 547, slug: 'girona', name: 'Girona', shortName: 'GIR', logo: 'https://media.api-sports.io/football/teams/547.png', competitionSlug: 'la-liga' },
+  // Bundesliga
+  { id: 157, slug: 'bayern-munich', name: 'Bayern Munich', shortName: 'BAY', logo: 'https://media.api-sports.io/football/teams/157.png', competitionSlug: 'bundesliga' },
+  { id: 165, slug: 'borussia-dortmund', name: 'Borussia Dortmund', shortName: 'BVB', logo: 'https://media.api-sports.io/football/teams/165.png', competitionSlug: 'bundesliga' },
+  { id: 173, slug: 'rb-leipzig', name: 'RB Leipzig', shortName: 'RBL', logo: 'https://media.api-sports.io/football/teams/173.png', competitionSlug: 'bundesliga' },
+  { id: 168, slug: 'bayer-leverkusen', name: 'Bayer Leverkusen', shortName: 'LEV', logo: 'https://media.api-sports.io/football/teams/168.png', competitionSlug: 'bundesliga' },
+  { id: 169, slug: 'eintracht-frankfurt', name: 'Eintracht Frankfurt', shortName: 'SGE', logo: 'https://media.api-sports.io/football/teams/169.png', competitionSlug: 'bundesliga' },
+  { id: 161, slug: 'vfb-stuttgart', name: 'VfB Stuttgart', shortName: 'VFB', logo: 'https://media.api-sports.io/football/teams/161.png', competitionSlug: 'bundesliga' },
+  { id: 182, slug: 'wolfsburg', name: 'Wolfsburg', shortName: 'WOB', logo: 'https://media.api-sports.io/football/teams/182.png', competitionSlug: 'bundesliga' },
+  { id: 163, slug: 'borussia-monchengladbach', name: "Borussia M'gladbach", shortName: 'BMG', logo: 'https://media.api-sports.io/football/teams/163.png', competitionSlug: 'bundesliga' },
+  { id: 172, slug: 'union-berlin', name: 'Union Berlin', shortName: 'UNB', logo: 'https://media.api-sports.io/football/teams/172.png', competitionSlug: 'bundesliga' },
+  { id: 162, slug: 'werder-bremen', name: 'Werder Bremen', shortName: 'SVW', logo: 'https://media.api-sports.io/football/teams/162.png', competitionSlug: 'bundesliga' },
+  // Serie A
+  { id: 489, slug: 'ac-milan', name: 'AC Milan', shortName: 'MIL', logo: 'https://media.api-sports.io/football/teams/489.png', competitionSlug: 'serie-a' },
+  { id: 505, slug: 'inter-milan', name: 'Inter Milan', shortName: 'INT', logo: 'https://media.api-sports.io/football/teams/505.png', competitionSlug: 'serie-a' },
+  { id: 496, slug: 'juventus', name: 'Juventus', shortName: 'JUV', logo: 'https://media.api-sports.io/football/teams/496.png', competitionSlug: 'serie-a' },
+  { id: 497, slug: 'as-roma', name: 'AS Roma', shortName: 'ROM', logo: 'https://media.api-sports.io/football/teams/497.png', competitionSlug: 'serie-a' },
+  { id: 492, slug: 'napoli', name: 'Napoli', shortName: 'NAP', logo: 'https://media.api-sports.io/football/teams/492.png', competitionSlug: 'serie-a' },
+  { id: 487, slug: 'lazio', name: 'Lazio', shortName: 'LAZ', logo: 'https://media.api-sports.io/football/teams/487.png', competitionSlug: 'serie-a' },
+  { id: 488, slug: 'fiorentina', name: 'Fiorentina', shortName: 'FIO', logo: 'https://media.api-sports.io/football/teams/488.png', competitionSlug: 'serie-a' },
+  { id: 500, slug: 'atalanta', name: 'Atalanta', shortName: 'ATA', logo: 'https://media.api-sports.io/football/teams/500.png', competitionSlug: 'serie-a' },
+  { id: 499, slug: 'torino', name: 'Torino', shortName: 'TOR', logo: 'https://media.api-sports.io/football/teams/499.png', competitionSlug: 'serie-a' },
+  { id: 502, slug: 'bologna', name: 'Bologna', shortName: 'BOL', logo: 'https://media.api-sports.io/football/teams/502.png', competitionSlug: 'serie-a' },
+  // Ligue 1
+  { id: 85, slug: 'paris-saint-germain', name: 'Paris Saint-Germain', shortName: 'PSG', logo: 'https://media.api-sports.io/football/teams/85.png', competitionSlug: 'ligue-1' },
+  { id: 80, slug: 'lyon', name: 'Lyon', shortName: 'OLY', logo: 'https://media.api-sports.io/football/teams/80.png', competitionSlug: 'ligue-1' },
+  { id: 81, slug: 'marseille', name: 'Marseille', shortName: 'OM', logo: 'https://media.api-sports.io/football/teams/81.png', competitionSlug: 'ligue-1' },
+  { id: 84, slug: 'nice', name: 'Nice', shortName: 'NIC', logo: 'https://media.api-sports.io/football/teams/84.png', competitionSlug: 'ligue-1' },
+  { id: 79, slug: 'lille', name: 'Lille', shortName: 'LIL', logo: 'https://media.api-sports.io/football/teams/79.png', competitionSlug: 'ligue-1' },
+  { id: 91, slug: 'monaco', name: 'Monaco', shortName: 'MON', logo: 'https://media.api-sports.io/football/teams/91.png', competitionSlug: 'ligue-1' },
+  { id: 94, slug: 'rennes', name: 'Rennes', shortName: 'REN', logo: 'https://media.api-sports.io/football/teams/94.png', competitionSlug: 'ligue-1' },
+  { id: 93, slug: 'lens', name: 'Lens', shortName: 'LNS', logo: 'https://media.api-sports.io/football/teams/93.png', competitionSlug: 'ligue-1' },
+  { id: 82, slug: 'montpellier', name: 'Montpellier', shortName: 'MPL', logo: 'https://media.api-sports.io/football/teams/82.png', competitionSlug: 'ligue-1' },
+  { id: 89, slug: 'toulouse', name: 'Toulouse', shortName: 'TOU', logo: 'https://media.api-sports.io/football/teams/89.png', competitionSlug: 'ligue-1' },
+]
+
+export function getTeamsByCompetition(competitionSlug: string): Team[] {
+  return TEAMS.filter(t => t.competitionSlug === competitionSlug)
+}
+
+export function getTeam(slug: string): Team | undefined {
+  return TEAMS.find(t => t.slug === slug)
+}
+
 // ─── Competition config ───────────────────────────────────────────────────────
 
 export interface Competition {
