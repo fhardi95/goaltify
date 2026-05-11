@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const BASE_URL = 'https://goaltify.com'
+const BASE_URL = 'https://www.goaltify.com'
 
 // Static pages with their priorities and change frequencies
 const STATIC_PAGES: MetadataRoute.Sitemap = [

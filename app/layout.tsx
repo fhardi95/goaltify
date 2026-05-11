@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   keywords: ['football', 'live scores', 'World Cup', 'Premier League', 'football news', 'training guides'],
   authors: [{ name: 'Goaltify' }],
   creator: 'Goaltify',
-  metadataBase: new URL('https://goaltify.com'),
+  metadataBase: new URL('https://www.goaltify.com'),
   openGraph: { siteName: 'Goaltify', type: 'website', locale: 'en_GB' },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },
