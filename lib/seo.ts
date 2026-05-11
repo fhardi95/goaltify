@@ -1,7 +1,7 @@
 import type { SEOProps } from '@/types'
 
 const SITE_NAME = 'Goaltify'
-const SITE_URL = 'https://www.goaltify.com'
+const SITE_URL = 'https://goaltify.com'
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`
 
 export function buildMetadata(seo: SEOProps) {
