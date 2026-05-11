@@ -1,153 +1,232 @@
-import type { MetadataRoute } from "next";
-import { getAllSlugs } from "./_data/blog-data";
-import { getAllWikiSlugs } from "./_data/wiki-data";
-import { FRUITS } from "./_data/fruits-data";
+import type { MetadataRoute } from 'next'
 
-const BASE_URL = "https://www.bloxfruitsai.com";
+const BASE_URL = 'https://www.goaltify.com'
+
+// Static pages with their priorities and change frequencies
+const STATIC_PAGES: MetadataRoute.Sitemap = [
+  {
+    url: BASE_URL,
+    lastModified: new Date(),
+    changeFrequency: 'hourly',
+    priority: 1.0,
+  },
+  {
+    url: `${BASE_URL}/live-scores`,
+    lastModified: new Date(),
+    changeFrequency: 'always',
+    priority: 0.9,
+  },
+  {
+    url: `${BASE_URL}/news`,
+    lastModified: new Date(),
+    changeFrequency: 'hourly',
+    priority: 0.9,
+  },
+  {
+    url: `${BASE_URL}/world-cup`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  },
+  {
+    url: `${BASE_URL}/euros`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.8,
+  },
+  {
+    url: `${BASE_URL}/academy`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  },
+  {
+    url: `${BASE_URL}/academy/dribbling`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  },
+  {
+    url: `${BASE_URL}/academy/training`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  },
+  {
+    url: `${BASE_URL}/academy/tactics`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  },
+  {
+    url: `${BASE_URL}/academy/fitness`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  },
+  {
+    url: `${BASE_URL}/tools`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  },
+  {
+    url: `${BASE_URL}/tools/calculators`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  },
+  {
+    url: `${BASE_URL}/tools/formations`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  },
+  {
+    url: `${BASE_URL}/shop`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  },
+  {
+    url: `${BASE_URL}/newsletter`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  },
+  {
+    url: `${BASE_URL}/privacy`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly',
+    priority: 0.3,
+  },
+  {
+    url: `${BASE_URL}/terms`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly',
+    priority: 0.3,
+  },
+  {
+    url: `${BASE_URL}/contact`,
+    lastModified: new Date(),
+    changeFrequency: 'yearly',
+    priority: 0.3,
+  },
+]
+
+// Academy guides — these get individual URLs for SEO
+const ACADEMY_GUIDES = [
+  'how-to-dribble-past-a-defender',
+  'stepover-tutorial',
+  'how-to-nutmeg',
+  'first-touch-drills',
+  'how-to-shoot-with-power',
+  'how-to-take-a-free-kick',
+].map(slug => ({
+  url: `${BASE_URL}/academy/dribbling/${slug}`,
+  lastModified: new Date(),
+  changeFrequency: 'monthly' as const,
+  priority: 0.7,
+}))
+
+const TRAINING_GUIDES = [
+  'pre-match-warm-up-routine',
+  'speed-training-drills',
+  'injury-prevention-for-footballers',
+  'football-diet-plan',
+  'strength-training-for-footballers',
+].map(slug => ({
+  url: `${BASE_URL}/academy/training/${slug}`,
+  lastModified: new Date(),
+  changeFrequency: 'monthly' as const,
+  priority: 0.7,
+}))
+
+const TACTICS_GUIDES = [
+  '4-3-3-formation-guide',
+  'high-press-explained',
+  'how-to-defend-set-pieces',
+  '4-4-2-formation-guide',
+  'tiki-taka-explained',
+  'counter-pressing-gegenpressing',
+].map(slug => ({
+  url: `${BASE_URL}/academy/tactics/${slug}`,
+  lastModified: new Date(),
+  changeFrequency: 'monthly' as const,
+  priority: 0.7,
+}))
+
+const TOOL_PAGES = [
+  'xg-calculator',
+  'pass-accuracy-calculator',
+  'sprint-speed-converter',
+  'football-metric-glossary',
+].map(slug => ({
+  url: `${BASE_URL}/tools/calculators/${slug}`,
+  lastModified: new Date(),
+  changeFrequency: 'monthly' as const,
+  priority: 0.6,
+}))
+
+// Competition pages
+const COMPETITION_SLUGS = ['premier-league', 'la-liga', 'bundesliga', 'serie-a', 'ligue-1']
+const COMPETITION_SUB_PAGES = ['', '/news', '/matches', '/standings', '/top-players']
+
+const COMPETITION_PAGES: MetadataRoute.Sitemap = COMPETITION_SLUGS.flatMap(slug =>
+  COMPETITION_SUB_PAGES.map(sub => ({
+    url: `${BASE_URL}/competitions/${slug}${sub}`,
+    lastModified: new Date(),
+    changeFrequency: sub === '' || sub === '/standings' ? ('hourly' as const) : ('daily' as const),
+    priority: sub === '' ? 0.9 : 0.8,
+  }))
+)
+
+// Team pages
+const TEAM_DATA: { competition: string; slug: string }[] = [
+  // Premier League
+  ...['manchester-united', 'liverpool', 'chelsea', 'arsenal', 'manchester-city',
+    'tottenham', 'aston-villa', 'newcastle', 'west-ham', 'everton',
+    'brentford', 'wolves', 'fulham', 'brighton', 'crystal-palace',
+    'southampton', 'nottingham-forest', 'leicester', 'ipswich', 'bournemouth',
+  ].map(slug => ({ competition: 'premier-league', slug })),
+  // La Liga
+  ...['barcelona', 'real-madrid', 'atletico-madrid', 'valencia', 'real-betis',
+    'sevilla', 'villarreal', 'athletic-bilbao', 'real-sociedad', 'girona',
+  ].map(slug => ({ competition: 'la-liga', slug })),
+  // Bundesliga
+  ...['bayern-munich', 'borussia-dortmund', 'rb-leipzig', 'bayer-leverkusen',
+    'eintracht-frankfurt', 'vfb-stuttgart', 'wolfsburg', 'borussia-monchengladbach',
+    'union-berlin', 'werder-bremen',
+  ].map(slug => ({ competition: 'bundesliga', slug })),
+  // Serie A
+  ...['ac-milan', 'inter-milan', 'juventus', 'as-roma', 'napoli',
+    'lazio', 'fiorentina', 'atalanta', 'torino', 'bologna',
+  ].map(slug => ({ competition: 'serie-a', slug })),
+  // Ligue 1
+  ...['paris-saint-germain', 'lyon', 'marseille', 'nice', 'lille',
+    'monaco', 'rennes', 'lens', 'montpellier', 'toulouse',
+  ].map(slug => ({ competition: 'ligue-1', slug })),
+]
+
+const TEAM_SUB_PAGES = ['', '/news', '/matches', '/standings', '/top-players']
+
+const TEAM_PAGES: MetadataRoute.Sitemap = TEAM_DATA.flatMap(({ competition, slug }) =>
+  TEAM_SUB_PAGES.map(sub => ({
+    url: `${BASE_URL}/competitions/${competition}/teams/${slug}${sub}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: sub === '' ? 0.75 : 0.65,
+  }))
+)
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
-  // ── CORE PAGES ──────────────────────────────────────────────────────────────
-  const coreRoutes: MetadataRoute.Sitemap = [
-    {
-      url: BASE_URL,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${BASE_URL}/values`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.95,
-    },
-    {
-      url: `${BASE_URL}/calculator`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.95,
-    },
-  ];
-
-  // ── FRUIT VALUE PAGES ────────────────────────────────────────────────────────
-  const fruitRoutes: MetadataRoute.Sitemap = FRUITS.map(fruit => ({
-    url: `${BASE_URL}/values/fruits/${fruit.id}`,
-    lastModified: now,
-    changeFrequency: "daily" as const,
-    priority: 0.92,
-  }));
-
-  // ── WIKI ─────────────────────────────────────────────────────────────────────
-  const wikiIndexRoute: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/wiki`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.92,
-    },
-  ];
-
-  const wikiRoutes: MetadataRoute.Sitemap = getAllWikiSlugs().map(slug => ({
-    url: `${BASE_URL}/wiki/${slug}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 0.88,
-  }));
-
-  // ── GUIDES ───────────────────────────────────────────────────────────────────
-  const guideRoutes: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/guides`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.88,
-    },
-    {
-      url: `${BASE_URL}/guides/pvp-builds`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/guides/fruit-rankings`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.85,
-    },
-    {
-      url: `${BASE_URL}/guides/grinding-routes`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.82,
-    },
-    {
-      url: `${BASE_URL}/guides/race-guide`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.78,
-    },
-    {
-      url: `${BASE_URL}/guides/beginner-guide`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.78,
-    },
-  ];
-
-  // ── BLOG ─────────────────────────────────────────────────────────────────────
-  const blogIndexRoute: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/blog`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.75,
-    },
-  ];
-
-  const blogRoutes: MetadataRoute.Sitemap = getAllSlugs().map(slug => ({
-    url: `${BASE_URL}/blog/${slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  // ── COMPANY ──────────────────────────────────────────────────────────────────
-  const companyRoutes: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: new Date("2025-04-22"),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${BASE_URL}/contact`,
-      lastModified: new Date("2025-04-22"),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${BASE_URL}/privacy-policy`,
-      lastModified: new Date("2025-04-22"),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${BASE_URL}/terms-of-use`,
-      lastModified: new Date("2025-04-22"),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  ];
-
   return [
-    ...coreRoutes,
-    ...fruitRoutes,
-    ...wikiIndexRoute,
-    ...wikiRoutes,
-    ...guideRoutes,
-    ...blogIndexRoute,
-    ...blogRoutes,
-    ...companyRoutes,
-  ];
+    ...STATIC_PAGES,
+    ...COMPETITION_PAGES,
+    ...TEAM_PAGES,
+    ...ACADEMY_GUIDES,
+    ...TRAINING_GUIDES,
+    ...TACTICS_GUIDES,
+    ...TOOL_PAGES,
+  ]
 }

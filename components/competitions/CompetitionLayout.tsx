@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Competition } from '@/lib/competitions'
+import { getTeamsByCompetition } from '@/lib/competitions'
 
 interface Props {
   competition: Competition
@@ -17,6 +19,7 @@ const TABS = [
 
 export function CompetitionLayout({ competition, activeTab, children }: Props) {
   const base = `/competitions/${competition.slug}`
+  const teams = getTeamsByCompetition(competition.slug)
 
   return (
     <div>
@@ -37,6 +40,36 @@ export function CompetitionLayout({ competition, activeTab, children }: Props) {
             </span>
           </div>
         </div>
+
+        {/* Team logos scrollbar */}
+        {teams.length > 0 && (
+          <div className="container-site pb-3">
+            <div className="flex gap-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {teams.map(team => (
+                <Link
+                  key={team.id}
+                  href={`/competitions/${competition.slug}/teams/${team.slug}`}
+                  className="flex flex-col items-center gap-1 group shrink-0"
+                  title={team.name}
+                >
+                  <div className="w-9 h-9 rounded-full bg-gray-800 border border-gray-700 group-hover:border-brand-400 transition-colors flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={team.logo}
+                      alt={team.name}
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                  <span className="text-[9px] text-gray-500 group-hover:text-brand-400 transition-colors whitespace-nowrap font-medium">
+                    {team.shortName}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="container-site">

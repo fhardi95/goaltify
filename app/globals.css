@@ -1,34 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --color-brand-50:  #f0faf4;
+  --color-brand-100: #d6f0e1;
+  --color-brand-200: #ace0c3;
+  --color-brand-400: #4db882;
+  --color-brand-500: #1a7a3f;
+  --color-brand-600: #155f32;
+  --color-brand-700: #0f4524;
+  --color-brand-800: #0a2e18;
+  --color-brand-900: #05170c;
+
+  --font-family-sans: var(--font-geist-sans), system-ui, sans-serif;
+}
+
 :root {
-  --cyan: #00f5ff;
-  --cyan-dim: #00b8c4;
-  --gold: #ffd700;
-  --bg-deep: #020810;
-  --bg-card: #060f1e;
-  --bg-card2: #0a1628;
-  --border: rgba(0,245,255,0.13);
-  --text: #e8f4ff;
-  --text-muted: #7a96b8;
-  --red: #ff4757;
-  --green: #2ed573;
-  --orange: #ffa502;
+  --brand: #1a7a3f;
+  --brand-light: #4db882;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Rajdhani', 'Inter', sans-serif;
-  background: var(--bg-deep);
-  color: var(--text);
-  overflow-x: hidden;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-gray-950 text-gray-100;
+  }
 }
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 3px; }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-@keyframes float1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -40px); } }
-@keyframes float2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-25px, 35px); } }
+@layer components {
+  .container-site {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-xl;
+  }
+  .badge-live {
+    @apply inline-flex items-center gap-1 text-xs font-medium bg-red-900/40 text-red-400 border border-red-800/50 px-2 py-0.5 rounded-full;
+  }
+  .badge-ft {
+    @apply inline-flex text-xs font-medium bg-gray-800 text-gray-400 px-2 py-0.5 rounded-full;
+  }
+  .badge-upcoming {
+    @apply inline-flex text-xs font-medium bg-blue-900/40 text-blue-400 px-2 py-0.5 rounded-full;
+  }
+}
+
