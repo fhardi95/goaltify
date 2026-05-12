@@ -219,6 +219,33 @@ const TEAM_PAGES: MetadataRoute.Sitemap = TEAM_DATA.flatMap(({ competition, slug
   }))
 )
 
+// Player pages
+const PLAYER_PAGES: MetadataRoute.Sitemap = [
+  { slug: 'erling-haaland', id: 276 },
+  { slug: 'kylian-mbappe', id: 874 },
+  { slug: 'vinicius-jr', id: 521 },
+  { slug: 'rodri', id: 154 },
+  { slug: 'jude-bellingham', id: 306 },
+  { slug: 'harry-kane', id: 2295 },
+  { slug: 'phil-foden', id: 1485 },
+  { slug: 'lionel-messi', id: 47 },
+  { slug: 'bukayo-saka', id: 1118 },
+  { slug: 'pedri', id: 2931 },
+].map(({ slug, id }) => ({
+  url: `${BASE_URL}/players/${slug}-${id}`,
+  lastModified: new Date(),
+  changeFrequency: 'weekly' as const,
+  priority: 0.8,
+}))
+
+// Players index page
+const PLAYERS_INDEX: MetadataRoute.Sitemap = [{
+  url: `${BASE_URL}/players`,
+  lastModified: new Date(),
+  changeFrequency: 'weekly' as const,
+  priority: 0.85,
+}]
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...STATIC_PAGES,
@@ -228,5 +255,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TRAINING_GUIDES,
     ...TACTICS_GUIDES,
     ...TOOL_PAGES,
+    ...PLAYERS_INDEX,
+    ...PLAYER_PAGES,
   ]
 }
