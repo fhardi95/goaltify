@@ -1,11 +1,30 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
 import type { Match } from '@/types'
 import { LiveScoreCard } from './LiveScoreCard'
 import { getMatchStatus } from '@/lib/api-football'
 
+// Map URL tournament slugs → API-Football league IDs
+const TOURNAMENT_LEAGUE_IDS: Record<string, number> = {
+  'world-cup-2026':   1,
+  'champions-league': 2,
+  'euro':             4,
+  'premier-league':   39,
+  'la-liga':          140,
+  'serie-a':          135,
+  'bundesliga':       78,
+  'ligue-1':          61,
+  'europa-league':    3,
+  'fa-cup':           45,
+  'championship':     40,
+}
+
 export function LiveScoresFeed() {
+  const searchParams = useSearchParams()
+  const tournament = searchParams.get('tournament') ?? 'all'
+
   const [matches, setMatches] = useState<Match[]>([])
   const [loading, setLoading] = useState(true)
   const [updatedAt, setUpdatedAt] = useState<string | null>(null)
@@ -28,19 +47,31 @@ export function LiveScoresFeed() {
     return () => clearInterval(interval)
   }, [fetchScores])
 
-  const filtered = matches.filter(m => {
+  // Filter by tournament slug if one is set
+  const leagueId = TOURNAMENT_LEAGUE_IDS[tournament]
+  const tournamentFiltered = leagueId
+    ? matches.filter(m => m.league.id === leagueId)
+    : matches
+
+  // Then filter by match status
+  const filtered = tournamentFiltered.filter(m => {
     if (filter === 'all') return true
     return getMatchStatus(m) === filter
   })
 
-  const liveCount = matches.filter(m => getMatchStatus(m) === 'live').length
+  const liveCount = tournamentFiltered.filter(m => getMatchStatus(m) === 'live').length
+
+  // Human-readable label for selected tournament
+  const tournamentLabel = tournament === 'all'
+    ? "Today's matches"
+    : tournament.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
   return (
     <div>
       {/* Header + filters */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold text-white">Today's matches</h2>
+          <h2 className="text-lg font-semibold text-white">{tournamentLabel}</h2>
           {liveCount > 0 && (
             <span className="badge-live">
               <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
@@ -85,7 +116,9 @@ export function LiveScoresFeed() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="card p-8 text-center text-gray-500 text-sm">
-          No {filter === 'all' ? '' : filter} matches found today.
+          {leagueId
+            ? `No ${tournamentLabel} matches today.`
+            : `No ${filter === 'all' ? '' : filter} matches found today.`}
         </div>
       ) : (
         <div className="grid gap-2">
