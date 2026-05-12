@@ -18,6 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
+
+export async function generateStaticParams() {
+  return ['bayern-munich','borussia-dortmund','rb-leipzig','bayer-leverkusen','eintracht-frankfurt','vfb-stuttgart','wolfsburg','borussia-monchengladbach','union-berlin','werder-bremen'].map(team => ({ team }))
+}
+
 export default async function Page({ params }: Props) {
   const { team } = await params
   return <TeamNewsPage competitionSlug="bundesliga" teamSlug={team} />

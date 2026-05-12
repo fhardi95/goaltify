@@ -18,6 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
+
+export async function generateStaticParams() {
+  return ['manchester-united','liverpool','chelsea','arsenal','manchester-city','tottenham','aston-villa','newcastle','west-ham','everton','brentford','wolves','fulham','brighton','crystal-palace','southampton','nottingham-forest','leicester','ipswich','bournemouth'].map(team => ({ team }))
+}
+
 export default async function Page({ params }: Props) {
   const { team } = await params
   return <TeamStandingsPage competitionSlug="premier-league" teamSlug={team} />

@@ -18,6 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   })
 }
 
+
+export async function generateStaticParams() {
+  return ['ac-milan','inter-milan','juventus','as-roma','napoli','lazio','fiorentina','atalanta','torino','bologna'].map(team => ({ team }))
+}
+
 export default async function Page({ params }: Props) {
   const { team } = await params
   return <TeamNewsPage competitionSlug="serie-a" teamSlug={team} />
