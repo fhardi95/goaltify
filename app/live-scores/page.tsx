@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { LiveScoresFeed } from '@/components/scores/LiveScoresFeed'
 import { buildMetadata } from '@/lib/seo'
 import Link from 'next/link'
@@ -253,7 +254,9 @@ export default function LiveScoresPage() {
         </div>
 
         {/* ── Live scores feed ────────────────────────────────────────────── */}
-        <LiveScoresFeed />
+        <Suspense fallback={null}>
+  <LiveScoresFeed />
+</Suspense>
 
         {/* ── SEO Introduction ─────────────────────────────────────────────── */}
         <section
