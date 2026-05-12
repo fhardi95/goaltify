@@ -57,7 +57,7 @@ export const WORLD_PLAYERS: WorldPlayer[] = [
   {
     id: 154, slug: 'rodri', name: 'Rodri', fullName: 'Rodrigo Hernández Cascante',
     nationality: 'Spanish', nationalityFlag: '🇪🇸', club: 'Manchester City', clubLogo: 'https://media.api-sports.io/football/teams/50.png',
-    position: 'Defensive Midfielder', age: 28, photo: 'https://media.api-sports.io/football/players/154.png',
+    position: 'Defensive Midfielder', age: 28, photo: 'https://media.api-sports.io/football/players/47.png',
     marketValue: '€150m', trophies: ['Champions League', 'Premier League ×4', 'Euro 2024'],
     bio: 'The best midfielder in the world. Rodri controls the tempo of any game he plays in and was the heartbeat of both Manchester City\'s treble-winning season and Spain\'s Euro 2024 triumph.',
     stats: { goals: 12, assists: 8, appearances: 50 },
