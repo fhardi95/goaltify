@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { LiveScoresFeed } from '@/components/scores/LiveScoresFeed'
 import { NewsCard } from '@/components/news/NewsCard'
 import type { NewsArticle } from '@/types'
@@ -104,7 +105,9 @@ export default async function HomePage() {
 
           {/* Left: Live scores (2/3 width) */}
           <div className="lg:col-span-2 space-y-8">
-            <LiveScoresFeed />
+            <Suspense fallback={null}>
+  <LiveScoresFeed />
+</Suspense>
 
             {/* Academy teaser */}
             <section>
