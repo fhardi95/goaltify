@@ -7,7 +7,7 @@ import { buildMetadata } from '@/lib/seo'
 export const metadata: Metadata = buildMetadata({
   title: 'Top 20 Best Football Players in the World 2026',
   description: 'The top 20 best football players in the world right now. Stats, profiles and career highlights for Haaland, Mbappé, Vinícius Jr., Bellingham and more on Goaltify.',
-  canonical: 'https://goaltify.com/players',
+  canonical: 'https://www.goaltify.com/players',
   keywords: ['best football players in the world', 'top 20 footballers 2026', 'best players 2025/26', 'world football rankings'],
 })
 

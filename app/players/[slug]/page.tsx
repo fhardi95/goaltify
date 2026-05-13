@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildMetadata({
     title: `${player.name} — Profile, Stats & Career | Goaltify`,
     description: `${player.name} full profile: career stats, club history, trophies, market value and everything you need to know about the ${player.nationality} ${player.position}.`,
-    canonical: `https://goaltify.com/players/${player.slug}-${player.id}`,
+    canonical: `https://www.goaltify.com/players/${player.slug}-${player.id}`,
     keywords: [player.name, `${player.name} stats`, `${player.name} career`, `${player.name} goals`, `${player.nationality} footballer`],
   })
 }
@@ -47,7 +47,7 @@ export default async function PlayerPage({ params }: Props) {
     jobTitle: player.position,
     nationality: player.nationality,
     image: player.photo,
-    url: `https://goaltify.com/players/${player.slug}-${player.id}`,
+    url: `https://www.goaltify.com/players/${player.slug}-${player.id}`,
     memberOf: { '@type': 'SportsTeam', name: player.club },
     description: player.bio,
   }

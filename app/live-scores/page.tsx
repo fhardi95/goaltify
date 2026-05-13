@@ -66,7 +66,28 @@ const jsonLd = {
         url: 'https://www.goaltify.com',
       },
       about: [
-        { '@type': 'SportsEvent', name: 'FIFA World Cup 2026' },
+        {
+  '@type': 'SportsEvent',
+  name: 'FIFA World Cup 2026',
+  startDate: '2026-06-11',
+  endDate: '2026-07-19',
+  location: {
+    '@type': 'Place',
+    name: 'United States, Canada & Mexico',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'US',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'FIFA',
+    url: 'https://www.fifa.com',
+  },
+  description: 'The 2026 FIFA World Cup hosted across the United States, Canada and Mexico.',
+  eventStatus: 'https://schema.org/EventScheduled',
+  image: 'https://upload.wikimedia.org/wikipedia/en/2/2e/2026_FIFA_World_Cup.svg',
+},
         { '@type': 'SportsOrganization', name: 'Premier League' },
         { '@type': 'SportsOrganization', name: 'UEFA Champions League' },
       ],
