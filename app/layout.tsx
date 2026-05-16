@@ -13,21 +13,40 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 export const metadata: Metadata = {
   title: {
     default: 'Goaltify — Live Football Scores, News & Training Guides',
-    template: '%s',
+    template: '%s | Goaltify',
   },
   description:
-    'Goaltify covers live football scores, World Cup news, Euro Championship results, training guides, & tactical analysis. Your ultimate football companion.',
+    'Goaltify covers live football scores, World Cup news, Euro Championship results, training guides, and tactical analysis. Your ultimate football companion.',
   keywords: ['football', 'live scores', 'World Cup', 'Premier League', 'football news', 'training guides'],
   authors: [{ name: 'Goaltify' }],
   creator: 'Goaltify',
   metadataBase: new URL('https://www.goaltify.com'),
-  openGraph: { siteName: 'Goaltify', type: 'website', locale: 'en_GB' },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
+  manifest: '/site.webmanifest',
+  openGraph: {
+    siteName: 'Goaltify',
+    type: 'website',
+    locale: 'en_GB',
+    images: [{ url: '/og-default.jpg', width: 1200, height: 630 }],
+  },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const siteSchema = buildSiteSchema()
+
   return (
     <html lang="en">
       <head>
