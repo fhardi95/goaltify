@@ -2,260 +2,92 @@ import type { MetadataRoute } from 'next'
 
 const BASE_URL = 'https://www.goaltify.com'
 
-// Static pages with their priorities and change frequencies
 const STATIC_PAGES: MetadataRoute.Sitemap = [
-  {
-    url: BASE_URL,
-    lastModified: new Date(),
-    changeFrequency: 'hourly',
-    priority: 1.0,
-  },
-  {
-    url: `${BASE_URL}/live-scores`,
-    lastModified: new Date(),
-    changeFrequency: 'always',
-    priority: 0.9,
-  },
-  {
-    url: `${BASE_URL}/news`,
-    lastModified: new Date(),
-    changeFrequency: 'hourly',
-    priority: 0.9,
-  },
-  {
-    url: `${BASE_URL}/world-cup`,
-    lastModified: new Date(),
-    changeFrequency: 'daily',
-    priority: 0.9,
-  },
-  {
-    url: `${BASE_URL}/euros`,
-    lastModified: new Date(),
-    changeFrequency: 'daily',
-    priority: 0.8,
-  },
-  {
-    url: `${BASE_URL}/academy`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  },
-  {
-    url: `${BASE_URL}/academy/dribbling`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/academy/training`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/academy/tactics`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/academy/fitness`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/tools`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/tools/calculators`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.6,
-  },
-  {
-    url: `${BASE_URL}/tools/formations`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.6,
-  },
-  {
-    url: `${BASE_URL}/shop`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.6,
-  },
-  {
-    url: `${BASE_URL}/newsletter`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.5,
-  },
-  {
-    url: `${BASE_URL}/privacy`,
-    lastModified: new Date(),
-    changeFrequency: 'yearly',
-    priority: 0.3,
-  },
-  {
-    url: `${BASE_URL}/terms`,
-    lastModified: new Date(),
-    changeFrequency: 'yearly',
-    priority: 0.3,
-  },
-  {
-    url: `${BASE_URL}/contact`,
-    lastModified: new Date(),
-    changeFrequency: 'yearly',
-    priority: 0.3,
-  },
+  { url: BASE_URL,                          lastModified: new Date(), changeFrequency: 'hourly',  priority: 1.0 },
+  { url: `${BASE_URL}/live-scores`,         lastModified: new Date(), changeFrequency: 'always',  priority: 0.9 },
+  { url: `${BASE_URL}/news`,                lastModified: new Date(), changeFrequency: 'hourly',  priority: 0.9 },
+  { url: `${BASE_URL}/world-cup`,           lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
+  { url: `${BASE_URL}/euros`,               lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
+  { url: `${BASE_URL}/players`,             lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+  { url: `${BASE_URL}/academy`,             lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+  { url: `${BASE_URL}/academy/dribbling`,   lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE_URL}/academy/training`,    lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE_URL}/academy/tactics`,     lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE_URL}/academy/fitness`,     lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE_URL}/tools`,               lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+  { url: `${BASE_URL}/tools/formations`,    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+  { url: `${BASE_URL}/shop`,                lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.6 },
+  { url: `${BASE_URL}/newsletter`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+  { url: `${BASE_URL}/privacy`,             lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
+  { url: `${BASE_URL}/terms`,               lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
+  { url: `${BASE_URL}/contact`,             lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
 ]
 
-// Academy guides — these get individual URLs for SEO
-const ACADEMY_GUIDES = [
-  'how-to-dribble-past-a-defender',
-  'stepover-tutorial',
-  'how-to-nutmeg',
-  'first-touch-drills',
-  'how-to-shoot-with-power',
-  'how-to-take-a-free-kick',
-].map(slug => ({
-  url: `${BASE_URL}/academy/dribbling/${slug}`,
-  lastModified: new Date(),
-  changeFrequency: 'monthly' as const,
-  priority: 0.7,
-}))
-
-const TRAINING_GUIDES = [
-  'pre-match-warm-up-routine',
-  'speed-training-drills',
-  'injury-prevention-for-footballers',
-  'football-diet-plan',
-  'strength-training-for-footballers',
-].map(slug => ({
-  url: `${BASE_URL}/academy/training/${slug}`,
-  lastModified: new Date(),
-  changeFrequency: 'monthly' as const,
-  priority: 0.7,
-}))
-
-const TACTICS_GUIDES = [
-  '4-3-3-formation-guide',
-  'high-press-explained',
-  'how-to-defend-set-pieces',
-  '4-4-2-formation-guide',
-  'tiki-taka-explained',
-  'counter-pressing-gegenpressing',
-].map(slug => ({
-  url: `${BASE_URL}/academy/tactics/${slug}`,
-  lastModified: new Date(),
-  changeFrequency: 'monthly' as const,
-  priority: 0.7,
-}))
-
-const TOOL_PAGES = [
-  'xg-calculator',
-  'pass-accuracy-calculator',
-  'sprint-speed-converter',
-  'football-metric-glossary',
-].map(slug => ({
-  url: `${BASE_URL}/tools/calculators/${slug}`,
-  lastModified: new Date(),
-  changeFrequency: 'monthly' as const,
-  priority: 0.6,
-}))
-
-// Competition pages
-const COMPETITION_SLUGS = ['premier-league', 'la-liga', 'bundesliga', 'serie-a', 'ligue-1']
-const COMPETITION_SUB_PAGES = ['', '/news', '/matches', '/standings', '/top-players']
-
-const COMPETITION_PAGES: MetadataRoute.Sitemap = COMPETITION_SLUGS.flatMap(slug =>
-  COMPETITION_SUB_PAGES.map(sub => ({
-    url: `${BASE_URL}/competitions/${slug}${sub}`,
+// Competitions (5 leagues × 5 tabs)
+const LEAGUES = ['premier-league', 'bundesliga', 'la-liga', 'serie-a', 'ligue-1']
+const LEAGUE_TABS = ['', '/news', '/matches', '/standings', '/top-players']
+const COMPETITION_PAGES: MetadataRoute.Sitemap = LEAGUES.flatMap(league =>
+  LEAGUE_TABS.map(tab => ({
+    url: `${BASE_URL}/competitions/${league}${tab}`,
     lastModified: new Date(),
-    changeFrequency: sub === '' || sub === '/standings' ? ('hourly' as const) : ('daily' as const),
-    priority: sub === '' ? 0.9 : 0.8,
+    changeFrequency: tab === '' || tab === '/matches' || tab === '/standings' ? 'daily' as const : 'weekly' as const,
+    priority: tab === '' ? 0.8 : 0.7,
   }))
 )
 
 // Team pages
-const TEAM_DATA: { competition: string; slug: string }[] = [
-  // Premier League
-  ...['manchester-united', 'liverpool', 'chelsea', 'arsenal', 'manchester-city',
-    'tottenham', 'aston-villa', 'newcastle', 'west-ham', 'everton',
-    'brentford', 'wolves', 'fulham', 'brighton', 'crystal-palace',
-    'southampton', 'nottingham-forest', 'leicester', 'ipswich', 'bournemouth',
-  ].map(slug => ({ competition: 'premier-league', slug })),
-  // La Liga
-  ...['barcelona', 'real-madrid', 'atletico-madrid', 'valencia', 'real-betis',
-    'sevilla', 'villarreal', 'athletic-bilbao', 'real-sociedad', 'girona',
-  ].map(slug => ({ competition: 'la-liga', slug })),
-  // Bundesliga
-  ...['bayern-munich', 'borussia-dortmund', 'rb-leipzig', 'bayer-leverkusen',
-    'eintracht-frankfurt', 'vfb-stuttgart', 'wolfsburg', 'borussia-monchengladbach',
-    'union-berlin', 'werder-bremen',
-  ].map(slug => ({ competition: 'bundesliga', slug })),
-  // Serie A
-  ...['ac-milan', 'inter-milan', 'juventus', 'as-roma', 'napoli',
-    'lazio', 'fiorentina', 'atalanta', 'torino', 'bologna',
-  ].map(slug => ({ competition: 'serie-a', slug })),
-  // Ligue 1
-  ...['paris-saint-germain', 'lyon', 'marseille', 'nice', 'lille',
-    'monaco', 'rennes', 'lens', 'montpellier', 'toulouse',
-  ].map(slug => ({ competition: 'ligue-1', slug })),
+const TEAM_PAGES: MetadataRoute.Sitemap = [
+  { url: `${BASE_URL}/teams/england`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
 ]
 
-const TEAM_SUB_PAGES = ['', '/news', '/matches', '/standings', '/top-players']
-
-const TEAM_PAGES: MetadataRoute.Sitemap = TEAM_DATA.flatMap(({ competition, slug }) =>
-  TEAM_SUB_PAGES.map(sub => ({
-    url: `${BASE_URL}/competitions/${competition}/teams/${slug}${sub}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const,
-    priority: sub === '' ? 0.75 : 0.65,
-  }))
-)
-
-// Player pages
-const PLAYER_PAGES: MetadataRoute.Sitemap = [
-  { slug: 'erling-haaland', id: 276 },
-  { slug: 'kylian-mbappe', id: 874 },
-  { slug: 'vinicius-jr', id: 521 },
-  { slug: 'rodri', id: 154 },
-  { slug: 'jude-bellingham', id: 306 },
-  { slug: 'harry-kane', id: 2295 },
-  { slug: 'phil-foden', id: 1485 },
-  { slug: 'lionel-messi', id: 47 },
-  { slug: 'bukayo-saka', id: 1118 },
-  { slug: 'pedri', id: 2931 },
-].map(({ slug, id }) => ({
-  url: `${BASE_URL}/players/${slug}-${id}`,
+// World players
+const PLAYER_SLUGS = [
+  'erling-haaland-276', 'kylian-mbappe-874', 'vinicius-jr-521', 'rodri-154',
+  'jude-bellingham-306', 'harry-kane-2295', 'phil-foden-1485', 'lionel-messi-47',
+  'bukayo-saka-1118', 'pedri-2931',
+]
+const PLAYER_PAGES: MetadataRoute.Sitemap = PLAYER_SLUGS.map(slug => ({
+  url: `${BASE_URL}/players/${slug}`,
   lastModified: new Date(),
   changeFrequency: 'weekly' as const,
-  priority: 0.8,
+  priority: 0.7,
 }))
 
-// Players index page
-const PLAYERS_INDEX: MetadataRoute.Sitemap = [{
-  url: `${BASE_URL}/players`,
-  lastModified: new Date(),
-  changeFrequency: 'weekly' as const,
-  priority: 0.85,
-}]
+// Academy sub-articles
+const DRIBBLING_GUIDES = [
+  'how-to-dribble-past-a-defender', 'stepover-tutorial', 'how-to-nutmeg',
+  'first-touch-drills', 'how-to-shoot-with-power', 'how-to-take-a-free-kick',
+].map(slug => ({ url: `${BASE_URL}/academy/dribbling/${slug}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 }))
+
+const TRAINING_GUIDES = [
+  'pre-match-warm-up-routine', 'speed-training-drills', 'injury-prevention-for-footballers',
+  'football-diet-plan', 'strength-training-for-footballers', 'weekly-football-training-plan',
+].map(slug => ({ url: `${BASE_URL}/academy/training/${slug}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 }))
+
+const TACTICS_GUIDES = [
+  '4-3-3-formation-guide', '4-4-2-formation-guide', 'high-press-explained',
+  'counter-pressing-gegenpressing', 'how-to-defend-set-pieces',
+].map(slug => ({ url: `${BASE_URL}/academy/tactics/${slug}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 }))
+
+const FITNESS_GUIDES = [
+  'football-fitness-test', 'cardio-for-footballers', 'stretching-routine',
+  'mental-fitness-football', 'recovery-after-a-match',
+].map(slug => ({ url: `${BASE_URL}/academy/fitness/${slug}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 }))
+
+const TOOL_PAGES: MetadataRoute.Sitemap = [
+  'xg-calculator', 'pass-accuracy-calculator', 'sprint-speed-converter', 'football-metric-glossary',
+].map(slug => ({ url: `${BASE_URL}/tools/calculators/${slug}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 }))
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...STATIC_PAGES,
     ...COMPETITION_PAGES,
     ...TEAM_PAGES,
-    ...ACADEMY_GUIDES,
+    ...PLAYER_PAGES,
+    ...DRIBBLING_GUIDES,
     ...TRAINING_GUIDES,
     ...TACTICS_GUIDES,
+    ...FITNESS_GUIDES,
     ...TOOL_PAGES,
-    ...PLAYERS_INDEX,
-    ...PLAYER_PAGES,
   ]
 }
