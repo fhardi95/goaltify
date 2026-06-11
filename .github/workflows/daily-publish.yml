@@ -1,0 +1,38 @@
+name: Daily Auto-Publish
+
+on:
+  schedule:
+    # Run every day at 08:00 UTC (09:00 UK time)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Article 1
+        run: |
+          curl -s -X POST https://www.goaltify.com/api/auto-publish \
+            -H "Content-Type: application/json" \
+            -H "x-agent-secret: ${{ secrets.AGENT_SECRET }}" \
+            -d "{}" | jq .
+
+      - name: Wait 30 seconds
+        run: sleep 30
+
+      - name: Publish Article 2
+        run: |
+          curl -s -X POST https://www.goaltify.com/api/auto-publish \
+            -H "Content-Type: application/json" \
+            -H "x-agent-secret: ${{ secrets.AGENT_SECRET }}" \
+            -d "{}" | jq .
+
+      - name: Wait 30 seconds
+        run: sleep 30
+
+      - name: Publish Article 3
+        run: |
+          curl -s -X POST https://www.goaltify.com/api/auto-publish \
+            -H "Content-Type: application/json" \
+            -H "x-agent-secret: ${{ secrets.AGENT_SECRET }}" \
+            -d "{}" | jq .

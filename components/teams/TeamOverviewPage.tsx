@@ -1,0 +1,232 @@
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
+import { TeamLayout } from '@/components/teams/TeamLayout'
+import { getTeam, getCompetition, getFixtures, formatDate } from '@/lib/competitions'
+import { getTeamContent } from '@/lib/team-content'
+
+interface Props {
+  competitionSlug: string
+  teamSlug: string
+}
+
+export async function TeamOverviewPage({ competitionSlug, teamSlug }: Props) {
+  const team = getTeam(teamSlug)
+  const comp = getCompetition(competitionSlug)
+  if (!team || !comp || team.competitionSlug !== comp.slug) notFound()
+
+  const content = getTeamContent(teamSlug)
+
+  const [recent, upcoming] = await Promise.all([
+    getFixtures(comp.leagueId, comp.season, undefined, 5),
+    getFixtures(comp.leagueId, comp.season, 5),
+  ])
+
+  const teamRecent = recent.filter(
+    m => m.teams.home.id === team.id || m.teams.away.id === team.id
+  ).slice(0, 5)
+
+  const teamUpcoming = upcoming.filter(
+    m => m.teams.home.id === team.id || m.teams.away.id === team.id
+  ).slice(0, 5)
+
+  // JSON-LD structured data for SEO
+  const jsonLd = content ? {
+    '@context': 'https://schema.org',
+    '@type': 'SportsTeam',
+    name: team.name,
+    alternateName: content.schema.alternateName,
+    sport: 'Football',
+    foundingDate: content.schema.foundingDate,
+    url: `https://www.goaltify.com/competitions/${comp.slug}/teams/${team.slug}`,
+    logo: team.logo,
+    location: {
+      '@type': 'Place',
+      name: content.stadium,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: content.city,
+        addressCountry: content.country,
+      },
+    },
+    memberOf: {
+      '@type': 'SportsOrganization',
+      name: comp.name,
+    },
+    description: content.history.substring(0, 200),
+  } : null
+
+  return (
+    <TeamLayout team={team} competition={comp} activeTab="overview">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main content */}
+        <div className="lg:col-span-2 space-y-6">
+
+          {/* Club History */}
+          {content && (
+            <section className="card p-5">
+              <h2 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                📖 Club History
+              </h2>
+              <p className="text-sm text-gray-300 leading-relaxed">{content.history}</p>
+            </section>
+          )}
+
+          {/* Key Facts */}
+          {content && content.keyFacts.length > 0 && (
+            <section className="card p-5">
+              <h2 className="text-base font-bold text-white mb-3">⚡ Key Facts</h2>
+              <ul className="space-y-2">
+                {content.keyFacts.map((fact, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                    <span className="text-brand-400 mt-0.5 shrink-0">→</span>
+                    <span>{fact}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Recent Results */}
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-base font-bold text-white">Recent Results</h2>
+              <Link href={`/competitions/${comp.slug}/teams/${team.slug}/matches`} className="text-xs text-brand-400 hover:text-brand-300">All matches →</Link>
+            </div>
+            <div className="space-y-2">
+              {teamRecent.length === 0 ? (
+                <div className="card p-4 text-center text-xs text-gray-600">No recent results available</div>
+              ) : teamRecent.map(m => {
+                const isHome = m.teams.home.id === team.id
+                const teamSide = isHome ? m.teams.home : m.teams.away
+                const oppSide = isHome ? m.teams.away : m.teams.home
+                const teamGoals = isHome ? m.goals.home : m.goals.away
+                const oppGoals = isHome ? m.goals.away : m.goals.home
+                const won = teamSide.winner
+                const drew = teamSide.winner === false && oppSide.winner === false
+                const resultColor = won ? 'text-green-400' : drew ? 'text-yellow-400' : 'text-red-400'
+                const resultLabel = won ? 'W' : drew ? 'D' : 'L'
+                return (
+                  <div key={m.fixture.id} className="card p-3 flex items-center gap-3">
+                    <span className={`text-xs font-bold w-5 text-center ${resultColor}`}>{resultLabel}</span>
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <Image src={oppSide.logo} alt={oppSide.name} width={18} height={18} className="object-contain shrink-0" unoptimized />
+                      <span className="text-sm text-white truncate">{isHome ? 'vs' : '@'} {oppSide.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0 text-sm font-bold text-white">
+                      <span>{teamGoals}</span>
+                      <span className="text-gray-600 text-xs font-normal">–</span>
+                      <span>{oppGoals}</span>
+                    </div>
+                    <span className="text-[10px] text-gray-500 shrink-0">{formatDate(m.fixture.date)}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+
+          {/* Honours / Trophies */}
+          {content && content.trophies.length > 0 && (
+            <section className="card p-5">
+              <h2 className="text-base font-bold text-white mb-3">🏆 Honours</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {content.trophies.map((t, i) => (
+                  <div key={i} className="flex items-center justify-between border border-gray-800 rounded-lg px-3 py-2">
+                    <span className="text-xs text-gray-300">{t.label}</span>
+                    <span className="text-sm font-bold text-brand-400 ml-2 shrink-0">×{t.count}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Rivals */}
+          {content && content.rivals.length > 0 && (
+            <section className="card p-5">
+              <h2 className="text-base font-bold text-white mb-3">⚔️ Key Rivalries</h2>
+              <div className="flex flex-wrap gap-2">
+                {content.rivals.map((r, i) => (
+                  <span key={i} className="text-xs bg-gray-800 text-gray-300 px-3 py-1.5 rounded-full">{r}</span>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <aside className="space-y-4">
+
+          {/* Club Info */}
+          {content && (
+            <div className="card p-4">
+              <h3 className="text-sm font-semibold text-white mb-3">📋 Club Info</h3>
+              <dl className="space-y-2 text-xs">
+                {[
+                  { label: 'Founded', value: content.founded.toString() },
+                  { label: 'Nickname', value: content.nickname },
+                  { label: 'Stadium', value: content.stadium },
+                  { label: 'Capacity', value: content.stadiumCapacity.toLocaleString() },
+                  { label: 'City', value: content.city },
+                  { label: 'Manager', value: content.manager },
+                  { label: 'Colours', value: content.colors },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between gap-2">
+                    <dt className="text-gray-500 shrink-0">{label}</dt>
+                    <dd className="text-gray-200 text-right">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          {/* Upcoming Fixtures */}
+          <div className="card p-4">
+            <h3 className="text-sm font-semibold text-white mb-3">📅 Upcoming Fixtures</h3>
+            <div className="space-y-2">
+              {teamUpcoming.length === 0 ? (
+                <p className="text-xs text-gray-600">No upcoming fixtures available</p>
+              ) : teamUpcoming.map(m => {
+                const isHome = m.teams.home.id === team.id
+                const oppSide = isHome ? m.teams.away : m.teams.home
+                return (
+                  <div key={m.fixture.id} className="border-b border-gray-800 pb-2 last:border-0 last:pb-0">
+                    <p className="text-[10px] text-gray-600 mb-1">{formatDate(m.fixture.date)}</p>
+                    <div className="flex items-center gap-2">
+                      <Image src={oppSide.logo} alt={oppSide.name} width={14} height={14} className="object-contain shrink-0" unoptimized />
+                      <span className="text-xs text-gray-400">{isHome ? 'vs' : '@'}</span>
+                      <span className="text-xs text-white truncate">{oppSide.name}</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <Link href={`/competitions/${comp.slug}/teams/${team.slug}/matches`} className="block text-center text-xs text-brand-400 hover:text-brand-300 mt-3">View all fixtures →</Link>
+          </div>
+
+          {/* Quick links */}
+          <div className="card p-4">
+            <h3 className="text-sm font-semibold text-white mb-2">Quick links</h3>
+            <div className="space-y-1.5">
+              {[
+                { label: '📊 Standings', href: `/competitions/${comp.slug}/teams/${team.slug}/standings` },
+                { label: '⚽ Top Scorers', href: `/competitions/${comp.slug}/teams/${team.slug}/top-players` },
+                { label: '📰 Latest News', href: `/competitions/${comp.slug}/teams/${team.slug}/news` },
+                { label: '🗓 All Fixtures', href: `/competitions/${comp.slug}/teams/${team.slug}/matches` },
+                { label: `← Back to ${comp.shortName}`, href: `/competitions/${comp.slug}` },
+              ].map(l => (
+                <Link key={l.href} href={l.href} className="block text-xs text-gray-400 hover:text-brand-400 transition-colors py-1 border-b border-gray-800 last:border-0">{l.label}</Link>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </TeamLayout>
+  )
+}
